@@ -62,9 +62,23 @@ db.alunos.find({
 });
 
 // query com OR
+db.alunos.find({
+  $or: [{ "habilidades.nome": "PHP" }, { "habilidades.nome": "Java" }],
+});
 
 // query com OR e AND que não encontre algo
+db.alunos.find({
+  $or: [{ "habilidades.nome": "PHP" }, { "habilidades.nome": "Java" }],
+  "curso.abrev": "SIS",
+});
 
 // query com OR e AND que encontre algo
+db.alunos.find({
+  $or: [{ "habilidades.nome": "PHP" }, { "habilidades.nome": "Java" }],
+  "curso.abrev": "ENG",
+});
 
 // query com IN
+db.alunos.find({
+  "habilidades.nome": { $in: ["PHP", "Java"] },
+});
