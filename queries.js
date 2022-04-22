@@ -1,3 +1,13 @@
+/**
+ * um documento é um conjunto de atributos chave-valor (equivalente à um registro do SQL);
+ * uma coleção é um conjunto de coleções (equivalente à uma tabela do SQL);
+ * um banco de dados é um conjunto de coleções (equivalente à um banco de dados do SQL);
+ *
+ * os bancos não relacionais podem ser utilizados em situações onde a dinâmica dos dados varia, ou seja,
+ * quando atributos podem variar entre os "registros". Por exemplo em um e-commerce que vende produtos diversos,
+ * com características distintas (alguns com peso e altura, outros com páginas, outros com tamanhos, etc)
+ */
+
 db.alunos.insert({
   nome: "Henrique",
   data_nascimento: "1995-05-26",
