@@ -82,3 +82,87 @@ db.alunos.find({
 db.alunos.find({
   "habilidades.nome": { $in: ["PHP", "Java"] },
 });
+
+/**
+ * um update sem o "SET" pode atualizar o objeto por completo
+ * no exemplo abaixo, toda a estrutura é modificada
+ */
+db.alunos.update(
+  { _id: ObjectId("6260828df801b96c6508f2a0") },
+  {
+    nome: "Henrique",
+  }
+);
+
+/*
+ * query para atualizar apenas um
+   (por padrão, o mongodb atualiza apenas uma coleção)
+ */
+db.alunos.update(
+  { _id: ObjectId("6262013df801b96c6508f2a3") },
+  {
+    $set: {
+      "curso.nome": "Análise e Desenvolvimento de Sistemas",
+    },
+  }
+);
+
+db.alunos.update(
+  { _id: ObjectId("6262013df801b96c6508f2a3") },
+  {
+    $set: {
+      "curso.nome": "Análise de Sistemas",
+    },
+  }
+);
+
+/**
+ * query para atualizar vários
+ */
+db.alunos.update(
+  { "curso.nome": "Análise de Sistemas" },
+  {
+    $set: {
+      "curso.nome": "Análise e Desenvolvimento de Sistemas",
+    },
+  },
+  {
+    multi: true,
+  }
+);
+
+/**
+ * query para adicionar nota via update
+ */
+db.alunos.update(
+  { _id: ObjectId("62620145f801b96c6508f2a4") },
+  {
+    $push: {
+      notas: 7.5,
+    },
+  }
+);
+
+/**
+ * query para adicionar mais de uma nota
+ */
+db.alunos.update(
+  { _id: ObjectId("62620145f801b96c6508f2a4") },
+  {
+    $push: {
+      notas: { $each: [6, 5.8] },
+    },
+  }
+);
+
+/**
+ * query para remover uma nota específica
+ */
+db.alunos.update(
+  { _id: ObjectId("62620145f801b96c6508f2a4") },
+  {
+    $pull: {
+      notas: 6,
+    },
+  }
+);
