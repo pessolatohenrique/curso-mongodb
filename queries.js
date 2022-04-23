@@ -176,3 +176,27 @@ db.alunos.update(
     },
   }
 );
+
+/**
+ * query para buscar alunos com nota maior do que 5
+ */
+db.alunos.find({
+  notas: { $gt: 5 },
+});
+
+/**
+ * query para apenas um registro
+ */
+db.alunos.findOne({
+  "curso.nome": "Análise e Desenvolvimento de Sistemas",
+});
+
+/**
+ * query para ordenação por nome
+ */
+db.alunos.find().sort({ nome: 1 }).limit(2);
+
+/**
+ * query para ordenação por nome reverso
+ */
+db.alunos.find().sort({ nome: -1 });
