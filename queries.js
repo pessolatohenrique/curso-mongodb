@@ -200,3 +200,24 @@ db.alunos.find().sort({ nome: 1 }).limit(2);
  * query para ordenação por nome reverso
  */
 db.alunos.find().sort({ nome: -1 });
+
+/**
+ * query para atualizar alunos utilizando localização com coordenadas
+ * (latitude e longitude)
+ */
+db.alunoslocalizacao.createIndex({ location: "2dsphere" });
+
+db.alunoslocalizacao.aggregate([
+  {
+    $geoNear: {
+      near: {
+        coordinates: [-23.5702415, -46.635375],
+        type: "Point",
+      },
+      distanceField: "distanciatotal",
+      spherical: true,
+    },
+  },
+  { $limit: 4 },
+  { $skip: 1 },
+]);

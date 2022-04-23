@@ -17,3 +17,7 @@ Crie um database em alguma plataforma que suporte o MongoDB. Mais em:
 Execute os comandos presentes no arquivo especificado:
 
     queries.js
+
+Caso queira executar queries com base na localização geográfica, realize a importação do arquivo:
+
+    mongoimport --uri mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.hwhbo.mongodb.net/<DATABASE> --collection alunoslocalizacao --jsonArray < alunos_localizacao.json
