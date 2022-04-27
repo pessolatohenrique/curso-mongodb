@@ -8,13 +8,13 @@
  * com características distintas (alguns com peso e altura, outros com páginas, outros com tamanhos, etc)
  */
 
-db.alunos.insert({
+db.alunos.insertOne({
   nome: "Henrique",
   data_nascimento: "1995-05-26",
   sexo: "M",
 });
 
-db.alunos.insert({
+db.alunos.insertOne({
   nome: "Paulo",
   curso: {
     nome: "Análise de Sistemas",
@@ -29,7 +29,7 @@ db.alunos.find();
 
 db.alunos.remove({ _id: ObjectId("626082b5f801b96c6508f2a1") });
 
-db.alunos.insert({
+db.alunos.insertOne({
   nome: "Paulo",
   curso: {
     nome: "Análise de Sistemas",
@@ -43,7 +43,7 @@ db.alunos.insert({
   notas: [10.0, 9.5, 6.7],
 });
 
-db.alunos.insert({
+db.alunos.insertOne({
   nome: "Daniela",
   curso: {
     nome: "Engenharia de Software",
@@ -56,6 +56,45 @@ db.alunos.insert({
   ],
   notas: [8.5, 10, 10],
 });
+
+db.alunos.insertMany([
+  {
+    nome: "Rodrigo",
+    curso: {
+      nome: "Engenharia de Software",
+      abrev: "ENG",
+    },
+    habilidades: [
+      { nome: "Java", nível: "avançado" },
+      { nome: "Node", nível: "intermediário" },
+    ],
+    notas: [8.5, 7.5, 10],
+  },
+  {
+    nome: "Giovana",
+    curso: {
+      nome: "Sistemas de Informação",
+      abrev: "SIS",
+    },
+    habilidades: [
+      { nome: "CRM", nível: "avançado" },
+      { nome: "ERP", nível: "intermediário" },
+    ],
+    notas: [7.0, 7.5, 8.0],
+  },
+  {
+    nome: "Cristiane",
+    curso: {
+      nome: "Sistemas de Informação",
+      abrev: "SIS",
+    },
+    habilidades: [
+      { nome: "CRM", nível: "básico" },
+      { nome: "ERP", nível: "intermediário" },
+    ],
+    notas: [9.2, 6.0, 10],
+  },
+]);
 
 db.alunos.find({ nome: "Daniela" });
 
