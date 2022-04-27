@@ -156,11 +156,16 @@ db.alunos.find(
   { nome: 1, habilidades: 1 }
 );
 
+// query buscando atributos que não existem no documento
+db.alunos.find({
+  $or: [{ curso: null }, { habilidades: null }],
+});
+
 /**
- * um update sem o "SET" pode atualizar o objeto por completo
+ * um updateOne sem o "SET" pode atualizar o objeto por completo
  * no exemplo abaixo, toda a estrutura é modificada
  */
-db.alunos.update(
+db.alunos.updateOne(
   { _id: ObjectId("6260828df801b96c6508f2a0") },
   {
     nome: "Henrique",
@@ -171,7 +176,7 @@ db.alunos.update(
  * query para atualizar apenas um
    (por padrão, o mongodb atualiza apenas uma coleção)
  */
-db.alunos.update(
+db.alunos.updateOne(
   { _id: ObjectId("6262013df801b96c6508f2a3") },
   {
     $set: {
@@ -180,7 +185,7 @@ db.alunos.update(
   }
 );
 
-db.alunos.update(
+db.alunos.updateOne(
   { _id: ObjectId("6262013df801b96c6508f2a3") },
   {
     $set: {
@@ -192,7 +197,7 @@ db.alunos.update(
 /**
  * query para atualizar vários
  */
-db.alunos.update(
+db.alunos.updateMany(
   { "curso.nome": "Análise de Sistemas" },
   {
     $set: {
@@ -205,9 +210,9 @@ db.alunos.update(
 );
 
 /**
- * query para adicionar nota via update
+ * query para adicionar nota via updateOne
  */
-db.alunos.update(
+db.alunos.updateOne(
   { _id: ObjectId("62620145f801b96c6508f2a4") },
   {
     $push: {
@@ -219,7 +224,7 @@ db.alunos.update(
 /**
  * query para adicionar mais de uma nota
  */
-db.alunos.update(
+db.alunos.updateOne(
   { _id: ObjectId("62620145f801b96c6508f2a4") },
   {
     $push: {
@@ -231,7 +236,7 @@ db.alunos.update(
 /**
  * query para remover uma nota específica
  */
-db.alunos.update(
+db.alunos.updateOne(
   { _id: ObjectId("62620145f801b96c6508f2a4") },
   {
     $pull: {
@@ -283,4 +288,25 @@ db.alunoslocalizacao.aggregate([
   },
   { $limit: 4 },
   { $skip: 1 },
+]);
+
+/**
+ * queries com funções de agregação
+ * https://www.mongodb.com/docs/manual/reference/sql-aggregation-comparison/
+ */
+
+db.alunos.aggregate([{ $group: { _id: "$curso", count: { $sum: 1 } } }]);
+
+db.alunos.aggregate([
+  { $unwind: "$habilidades" },
+  { $group: { _id: "$habilidades.nome", count: { $sum: 1 } } },
+]);
+
+db.alunos.aggregate([
+  {
+    $group: {
+      _id: null,
+      count: { $sum: 1 },
+    },
+  },
 ]);
