@@ -132,6 +132,19 @@ db.alunos.find({
   "habilidades.nome": { $in: ["PHP", "Java"] },
 });
 
+// query com ALL (todas as habilidades)
+db.alunos.find({
+  "habilidades.nome": { $all: ["Node", "Java"] },
+});
+
+// query com "nested objects"
+db.alunos.find({
+  $and: [
+    { habilidades: { nome: "Node", nível: "intermediário" } },
+    { habilidades: { nome: "Java", nível: "avançado" } },
+  ],
+});
+
 /**
  * um update sem o "SET" pode atualizar o objeto por completo
  * no exemplo abaixo, toda a estrutura é modificada
