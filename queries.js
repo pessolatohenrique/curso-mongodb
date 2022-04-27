@@ -145,6 +145,17 @@ db.alunos.find({
   ],
 });
 
+// query retornando apenas alguns campos (fields)
+db.alunos.find(
+  {
+    $and: [
+      { habilidades: { nome: "Node", nível: "intermediário" } },
+      { habilidades: { nome: "Java", nível: "avançado" } },
+    ],
+  },
+  { nome: 1, habilidades: 1 }
+);
+
 /**
  * um update sem o "SET" pode atualizar o objeto por completo
  * no exemplo abaixo, toda a estrutura é modificada
